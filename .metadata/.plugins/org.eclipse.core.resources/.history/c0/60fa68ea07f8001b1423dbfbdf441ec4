@@ -1,0 +1,9 @@
+package com.spring.batch.config;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.spring.batch.dto.Employee;
+
+public interface EmployeeReposi extends JpaRepository<Employee, Integer>{
+
+}

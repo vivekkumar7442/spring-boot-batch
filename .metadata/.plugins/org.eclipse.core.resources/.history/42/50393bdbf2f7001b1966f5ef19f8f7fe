@@ -1,0 +1,27 @@
+package com.spring.batch.jobs;
+
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+
+import com.spring.batch.dto.Employee;
+
+@Component
+public class EmployeeDBWriter implements ItemWriter<Employee> {
+
+	@Autowired
+	private DataSource dataSource;
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	@Override
+	public void write(List<? extends Employee> employees) throws Exception {
+
+	}
+
+}

@@ -1,0 +1,21 @@
+package com.spring.batch.jobs;
+
+import java.util.List;
+
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.stereotype.Component;
+
+import com.spring.batch.dto.Employee;
+
+@Component
+public class EmployeeDBWriter implements ItemWriter<Employee> {
+
+
+
+
+
+    @Override
+    public void write(List<? extends Employee> employees) throws Exception {
+    }
+
+}

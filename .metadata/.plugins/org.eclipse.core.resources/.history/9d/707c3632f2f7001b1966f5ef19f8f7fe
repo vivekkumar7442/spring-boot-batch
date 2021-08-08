@@ -1,0 +1,20 @@
+package com.spring.batch.jobs;
+@Component
+public class EmployeeDBWriter implements ItemWriter<Employee> {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeDBWriter.class);
+
+    private EmployeeRepo employeeRepo;
+
+    @Autowired
+    public EmployeeDBWriter(EmployeeRepo employeeRepo) {
+        this.employeeRepo = employeeRepo;
+    }
+
+
+    @Override
+    public void write(List<? extends Employee> employees) throws Exception {
+        employeeRepo.saveAll(employees);
+        logger.info("{} employees saved in database", employees.size());
+    }
+}
