@@ -9,6 +9,7 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
@@ -21,13 +22,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.PathResource;
 
-import com.spring.batch.dto.Employee;
 import com.spring.batch.dto.EmployeeDTO;
-import com.spring.batch.dto.EmployeeFileRowMapper;
+import com.spring.batch.entity.Employee;
+import com.spring.batch.processor.EmployeeFileRowMapper;
 import com.spring.batch.processor.EmployeeProcessor;
+import com.spring.batch.writer.EmployeeDBWriter;
 
 @Configuration
-public class Demo1 {
+public class DataTransfer {
 
 	private JobBuilderFactory jobBuilderFactory;
 	private StepBuilderFactory stepBuilderFactory;
@@ -38,7 +40,7 @@ public class Demo1 {
 	private EmployeeDBWriter employeeDBWriter;
 
 	@Autowired
-	public Demo1(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
+	public DataTransfer(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
 			EmployeeProcessor employeeProcessor, DataSource dataSource) {
 		this.jobBuilderFactory = jobBuilderFactory;
 		this.stepBuilderFactory = stepBuilderFactory;
@@ -46,10 +48,10 @@ public class Demo1 {
 		this.dataSource = dataSource;
 	}
 
-	@Qualifier(value = "demo1")
+	@Qualifier(value = "dataTransfer")
 	@Bean
-	public Job demo1Job() throws Exception {
-		return this.jobBuilderFactory.get("demo1").start(step1Demo1()).build();
+	public Job dataTransferJob() throws Exception {
+		return this.jobBuilderFactory.get("dataTransfer").start(step1Demo1()).build();
 	}
 
 	@Bean
@@ -104,5 +106,10 @@ public class Demo1 {
 		CompositeItemWriter<Employee> writer = new CompositeItemWriter<Employee>();
 		writer.setDelegates(Arrays.asList(employeeDBWriterDefault(), childWriter()));
 		return writer;
+	}
+	
+	@Bean
+	public ExecutionContext executionContext() {
+		return new ExecutionContext();
 	}
 }

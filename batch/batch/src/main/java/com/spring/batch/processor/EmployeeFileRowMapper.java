@@ -1,7 +1,9 @@
-package com.spring.batch.dto;
+package com.spring.batch.processor;
 
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
+
+import com.spring.batch.dto.EmployeeDTO;
 
 public class EmployeeFileRowMapper implements FieldSetMapper<EmployeeDTO> {
 
@@ -12,11 +14,7 @@ public class EmployeeFileRowMapper implements FieldSetMapper<EmployeeDTO> {
        employee.setFirstName(fieldSet.readString("firstName"));
         employee.setLastName(fieldSet.readString("lastName"));
         employee.setEmail(fieldSet.readString("email"));
-        try {
           employee.setAge(fieldSet.readInt("age"));
-        } catch (Exception e) {
-
-        }
         return employee;
     }
 

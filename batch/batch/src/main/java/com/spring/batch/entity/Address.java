@@ -1,6 +1,8 @@
-package com.spring.batch.dto;
+package com.spring.batch.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,14 +17,23 @@ public class Address {
 		 */
 		private static final long serialVersionUID = 7615618179099493105L;
 		@Id
-	    private String employeeId;
+		@GeneratedValue(strategy=GenerationType.SEQUENCE)
+		private Integer id;
+		
+	    public Integer getId() {
+			return id;
+		}
+		public void setId(Integer id) {
+			this.id = id;
+		}
+		private String employeeId;
 	    private String firstName;
 	    private String lastName;
 	    private Integer age;
 	    private String email;
 	    
 	    @ManyToOne
-	    @JoinColumn(name="emp_id",referencedColumnName="employeeId")
+	    @JoinColumn(name="emp_id",referencedColumnName="id",nullable=false)
 	    private Employee employee;
 		public String getEmployeeId() {
 			return employeeId;
@@ -61,6 +72,12 @@ public class Address {
 		public void setEmployee(Employee employee) {
 			this.employee = employee;
 		}
+		@Override
+		public String toString() {
+			return "Address [id=" + id + ", employeeId=" + employeeId + ", firstName=" + firstName + ", lastName="
+					+ lastName + ", age=" + age + ", email=" + email + ", employee=" + employee + "]";
+		}
+		
 		
 		
 
